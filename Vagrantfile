@@ -8,6 +8,15 @@ Vagrant.configure("2") do |config|
         vb.memory = "1024"
         vb.cpus = 2
       end
+      web.vm.provision "shell", inline: <<-SHELL
+        echo "Installing dependencies ..."
+        sudo apt-get update
+	      echo Installing Docker...
+	      curl -sSL https://get.docker.com/ | sh
+	      sudo usermod -aG docker vagrant
+      SHELL
+    end
+
 
 
 end
