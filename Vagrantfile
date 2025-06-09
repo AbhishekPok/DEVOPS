@@ -1,0 +1,33 @@
+Vagrant.configure("2") do |config|
+  
+  config.vm.define "web" do |web|
+      web.vm.box = "bento/ubuntu-24.04"
+      web.vm.box_version = "202502.21.0"
+      web.vm.network "private_network", ip: "192.168.56.6"  
+      web.vm.provider "virtualbox" do |vb|
+        vb.memory = "1024"
+        vb.cpus = 2
+      end
+      web.vm.provision "shell", inline: <<-SHELL
+        sudo apt-get update
+	      echo Installing Docker...
+	      sudo apt-get update
+        sudo apt-get install ca-certificates curl
+        sudo install -m 0755 -d /etc/apt/keyrings
+        sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+        sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+        echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+        $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+        sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        sudo apt-get update
+        sudo usermod -aG docker vagrant
+        apt install python3 python3-venv -y
+        chmod +x script.sh
+      SHELL
+    end
+
+
+
+end
