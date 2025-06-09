@@ -24,6 +24,7 @@ Vagrant.configure("2") do |config|
         sudo apt-get update
         sudo usermod -aG docker vagrant
         apt install python3 python3-venv -y
+        chmod +x script.sh
       SHELL
     end
 
