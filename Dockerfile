@@ -5,4 +5,4 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 COPY SimpleProjects/Python /code/app
 
-CMD ["python","Python/MI\ calculator.py"]
+CMD ["python","app/BMI calculator.py"]
